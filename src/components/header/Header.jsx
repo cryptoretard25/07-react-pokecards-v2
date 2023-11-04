@@ -1,9 +1,9 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 
-function Title() {
+function Header() {
   return (
-    <>
+    <div className="header-wrapper">
       <h2>
         <img
           src={`${process.env.PUBLIC_URL}/images/pokeball.png`}
@@ -14,8 +14,8 @@ function Title() {
           <span>mon</span> Cards
         </div>
       </h2>
-    </>
+    </div>
   );
 }
 
-export default Title;
+export default Header;

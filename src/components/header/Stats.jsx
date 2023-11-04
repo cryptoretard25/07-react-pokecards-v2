@@ -1,21 +1,24 @@
 import React from "react";
+import {Container } from "react-bootstrap";
 
-function Stats({ score = 0, highScore=0, progress={current: "", max: ""} }) {
+function Stats({ score = 0, highScore=0, round={current: "", max: ""} }) {
   return (
-    <div className="stats-wrapper">
-      <div className="stats">
-        <p className="score">
-          <i className="nes-icon coin is-medium"></i> SCORE: {score}
-        </p>
-        <p className="high-score">
-          <i className="nes-icon trophy is-medium"></i>
-          HIGH SCORE: {highScore}
-        </p>
+    <Container fluid="lg">
+      <div className="stats-wrapper">
+        <div className="stats">
+          <p className="score">
+            <i className="nes-icon coin is-medium"></i> SCORE: {score}
+          </p>
+          <p className="high-score">
+            <i className="nes-icon trophy is-medium"></i>
+            HIGH SCORE: {highScore}
+          </p>
+        </div>
+        <div className="game-progress">
+          ROUND: {round.current}/{round.max}
+        </div>
       </div>
-      <div className="game-progress">
-        {progress.current}/{progress.max}
-      </div>
-    </div>
+    </Container>
   );
 }
 

@@ -8,7 +8,8 @@
 :root {
   font-size: 62.5%;
   --main-font: "Press Start 2P";
-  --background-color: hsla(217, 33%, 17%, 0.5);
+  --card-shadow: 2px 4px 8px 1px rgba(34, 60, 80, 0.5);
+  --background-color: hsla(217, 33%, 17%, 0.4);
   --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
@@ -32,6 +33,7 @@
 }
 
 body {
-  background-image: url(../public/background-sun.png);
+  background: url(../public/background-sun.png) no-repeat 50% fixed;
+  background-size: cover;
   min-height: 100vh;
 }
