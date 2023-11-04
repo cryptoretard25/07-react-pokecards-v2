@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 .footer{
@@ -135,8 +136,9 @@ div {
 }
 
 .face-down {
-  background: url(../public/icon.svg) no-repeat 50%;
+  background: url(../public/images/card-back.png) no-repeat 50%;
   background-color: var(--slate-200);
+  background-size: cover;
 }
 
 .face-up{

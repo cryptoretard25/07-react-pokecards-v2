@@ -14,6 +14,10 @@ function Greeting() {
           </p>
           <label>
             <input type="radio" className="nes-radio" name="answer" checked />
+            <span>Easy</span>
+          </label>{" "}
+          <label>
+            <input type="radio" className="nes-radio" name="answer" />
             <span>Normal</span>
           </label>{" "}
           <label>
