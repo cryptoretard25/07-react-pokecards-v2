@@ -17,6 +17,8 @@
 
 .main-container {
   flex: 1;
+  margin: 0;
+  max-width: 80%;
 }
 
 .stats {
@@ -114,21 +116,23 @@ div {
 
 /*<Main>*/
 .cards-wrapper {
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  align-self: center;
 }
 
 .card {
-  height: 24rem;
-  width: 18rem;
+  height: 20rem;
+  width: 16rem;
   border: 1px solid var(--slate-400);
   box-shadow: var(--card-shadow);
   border-radius: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .card:hover{
@@ -143,5 +147,24 @@ div {
 
 .face-up{
   background-color: var(--slate-100); 
+}
+
+.face-up>img{
+  padding: 2px;
+  border: 1px solid var(--slate-300);
+  width: 90%;
+}
+
+.face-up>p{
+  font-size: 1.1rem;
+  text-align: center;
+  overflow: hidden;
+  letter-spacing: -.02em;
+  text-transform: capitalize;
+}
+
+header > div.greeting-modal > div > h2{
+  text-align: center;
+  color: var(--stale-800);
 }
 /*</Main>*/

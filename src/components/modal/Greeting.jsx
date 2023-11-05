@@ -1,10 +1,25 @@
-import React from 'react'
+import React from "react";
+import Game from "../scripts/game";
+import { cloneDeep } from 'lodash'
 
-function Greeting() {
+function Greeting({ difficulty, setDifficulty, setGameStarted, setGame }) {
+  const handleDifficulty = ({target})=>{
+    setDifficulty(target.value)
+  }
+
+  const onGameStart = async (e)=>{
+    e.preventDefault();
+    const game = new Game(difficulty)
+    await game.setRequestedPokemons();
+    setGameStarted(true);
+    setGame(cloneDeep(game))
+  }
+
   return (
     <div className="greeting-modal">
       <div className="nes-container is-rounded greeting-wrapper">
-        <p>Welcome to React Pokemon Cards!</p>
+        <i className="nes-kirby" style={{ alignSelf: "center" }} />
+        <h2>Welcome to Pokemon Cards!</h2>
         <div className="nes-container with-title is-centered">
           <p
             className="title"
@@ -12,20 +27,43 @@ function Greeting() {
           >
             Choose difficulty
           </p>
-          <label>
-            <input type="radio" className="nes-radio" name="answer" checked />
-            <span>Easy</span>
-          </label>{" "}
-          <label>
-            <input type="radio" className="nes-radio" name="answer" />
-            <span>Normal</span>
-          </label>{" "}
-          <label>
-            <input type="radio" className="nes-radio" name="answer" />
-            <span>Hard</span>
-          </label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                className="nes-radio"
+                name="answer"
+                value={"EASY"}
+                checked={difficulty === "EASY"}
+                onChange={handleDifficulty}
+              />
+              <span>Easy</span>
+            </label>{" "}
+            <label>
+              <input
+                type="radio"
+                className="nes-radio"
+                name="answer"
+                value={"NORMAL"}
+                checked={difficulty === "NORMAL"}
+                onChange={handleDifficulty}
+              />
+              <span>Normal</span>
+            </label>{" "}
+            <label>
+              <input
+                type="radio"
+                className="nes-radio"
+                name="answer"
+                value={"HARD"}
+                checked={difficulty === "HARD"}
+                onChange={handleDifficulty}
+              />
+              <span>Hard</span>
+            </label>
+          </div>
         </div>
-        <button type="button" className="nes-btn is-primary start-button">
+        <button onClick={onGameStart} type="button" className="nes-btn is-primary start-button">
           START GAME
         </button>
       </div>
@@ -33,4 +71,4 @@ function Greeting() {
   );
 }
 
-export default Greeting
+export default Greeting;

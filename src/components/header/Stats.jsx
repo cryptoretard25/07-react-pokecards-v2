@@ -1,7 +1,7 @@
 import React from "react";
-import {Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
-function Stats({ score = 0, highScore=0, round={current: "", max: ""} }) {
+function Stats({ score, highScore, currentProgress, maxProgress }) {
   return (
     <Container fluid="lg">
       <div className="stats-wrapper">
@@ -15,7 +15,7 @@ function Stats({ score = 0, highScore=0, round={current: "", max: ""} }) {
           </p>
         </div>
         <div className="game-progress">
-          ROUND: {round.current}/{round.max}
+          PROGRESS: {currentProgress}/{maxProgress}
         </div>
       </div>
     </Container>

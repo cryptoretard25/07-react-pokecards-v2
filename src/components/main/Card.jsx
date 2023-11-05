@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function Card({ rotate, handleClick }) {
+function Card({ rotate, handleClick, name, imageSrc, uid }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [notBlocked, setNotBlocked] = useState(false);
 
@@ -31,7 +31,12 @@ function Card({ rotate, handleClick }) {
         className={`card ${isFlipped ? "face-up" : "face-down"}`}
         onClick={notBlocked ? handleClick : null}
       >
-        {isFlipped && <h3>Pokemon</h3>}
+        {isFlipped && (
+          <>
+            <img src={imageSrc} />
+            <p>{name}</p>
+          </>
+        )}
       </motion.div>
     </AnimatePresence>
   );

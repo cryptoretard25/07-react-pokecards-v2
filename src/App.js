@@ -8,25 +8,44 @@ import { useState } from "react";
 import Greeting from "./components/modal/Greeting";
 import Main from "./components/main/Main";
 import Footer from "./components/Footer";
+import GameOver from "./components/modal/GameOver";
+import { PokeContextProvider } from "./components/context/PokeContext";
+import usePokemon from "./components/hooks/usePokemon";
 
 function App() {
-  const [gameStarted, setGameStarted] = useState(true)
+  const [
+    gameStarted,
+    setGameStarted,
+    gameOver,
+    setGameOver,
+    difficulty,
+    setDifficulty,
+    game,
+    setGame,
+  ] = usePokemon();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Header />
-        {gameStarted ? (
-          <>
-            <Stats round={{ current: 1, max: 5 }} />
-            <Main/>
-          </>
-        ) : (
-          <Greeting />
-        )}
-        <Footer/>
-      </header>
-    </div>
+      <div className="App">
+        <header className="App-header">
+          <Header />
+          {gameOver ? (
+            <GameOver />
+          ) : gameStarted ? (
+            <>
+              <Stats game = {game} />
+              <Main game = {game} />
+            </>
+          ) : (
+            <Greeting
+              difficulty={difficulty}
+              setDifficulty={setDifficulty}
+              setGameStarted={setGameStarted}
+              setGame={setGame}
+            />
+          )}
+          <Footer />
+        </header>
+      </div>
   );
 }
 
