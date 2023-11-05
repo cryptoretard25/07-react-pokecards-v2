@@ -1,21 +1,22 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-function Stats({ score, highScore, currentProgress, maxProgress }) {
+function Stats({ game, cardsCurrent }) {
+
   return (
     <Container fluid="lg">
       <div className="stats-wrapper">
         <div className="stats">
           <p className="score">
-            <i className="nes-icon coin is-medium"></i> SCORE: {score}
+            <i className="nes-icon coin is-medium"></i> SCORE: {cardsCurrent}
           </p>
           <p className="high-score">
             <i className="nes-icon trophy is-medium"></i>
-            HIGH SCORE: {highScore}
+            HIGH SCORE: {"0"}
           </p>
         </div>
         <div className="game-progress">
-          PROGRESS: {currentProgress}/{maxProgress}
+          PROGRESS: {cardsCurrent}/{game.cardsMax}
         </div>
       </div>
     </Container>

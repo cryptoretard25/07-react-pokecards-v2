@@ -1,21 +1,22 @@
-import React from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import Card from "./Card";
-import { useState } from "react";
 
-function Main({ game }) {
-  const {pokemons} = game;
+function Main({ game, setGameOver, setCardsCurrent }) {
+  const { pokemons } = game;
   const [rotate, setRotate] = useState(true);
 
-  const handleClick = () => {
+  const handleClick = (uid) => {
     setRotate(false);
     setTimeout(() => {
       setRotate(true);
+      game.click(uid);
+      setGameOver(game.gameOver);
+      setCardsCurrent(game.clickedCards.length)
+      console.log(game)
     }, 1500);
   };
 
-  console.log(pokemons);
-  
   return (
     <Container fluid="lg" className="main-container">
       <div
@@ -29,10 +30,9 @@ function Main({ game }) {
             <Card
               key={pokemon.uid}
               rotate={rotate}
-              handleClick={handleClick}
+              handleClick={() => handleClick(pokemon.uid)}
               name={pokemon.name}
               imageSrc={pokemon.imageSrc}
-              uid={pokemon.uid}
             />
           );
         })}

@@ -1,19 +1,32 @@
-import React from 'react'
+import React from "react";
 
-function GameOver({score = 0}) {
+function GameOver({
+  game,
+  cardsCurrent,
+  onStartClick,
+  onQuitClick,
+}) {
+
   return (
     <div className="greeting-modal">
       <div className="nes-container is-rounded greeting-wrapper">
-        <i class="nes-ash" style={{alignSelf:"center"}}></i>
-        <h2>Game over!</h2>
+        <i className="nes-ash" style={{ alignSelf: "center" }}></i>
+        <h2>
+          Game over!
+          <br />
+          {game.cardsMax === cardsCurrent
+            ? "Congratulations you win!"
+            : "Sorry, but you lose."}
+        </h2>
         <div className="nes-container with-title is-centered">
-          <p>Your final score is: {score}</p>
+          <p>Your final score is: {cardsCurrent}</p>
         </div>
-        <div>
+        <div style={{ alignSelf: "center" }}>
           <button
             type="button"
             className="nes-btn is-success start-button"
             style={{ width: "17rem" }}
+            onClick={onStartClick}
           >
             Play Again
           </button>{" "}
@@ -21,6 +34,7 @@ function GameOver({score = 0}) {
             type="button"
             className="nes-btn is-error start-button"
             style={{ width: "17rem" }}
+            onClick={onQuitClick}
           >
             Quit Game
           </button>
@@ -30,4 +44,4 @@ function GameOver({score = 0}) {
   );
 }
 
-export default GameOver
+export default GameOver;

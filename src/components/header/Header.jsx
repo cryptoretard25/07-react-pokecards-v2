@@ -1,10 +1,9 @@
 import React from "react";
-import { Row, Col, Container } from "react-bootstrap";
 
-function Header() {
+function Header({onQuitClick}) {
   return (
     <div className="header-wrapper">
-      <h2>
+      <h2 onClick={onQuitClick}>
         <img
           src={`${process.env.PUBLIC_URL}/images/pokeball.png`}
           alt="pokeball"

@@ -4,21 +4,13 @@ import { CONSTANTS } from "./CONSTANTS";
 
 export default class Game {
   constructor(difficulty) {
-    this.pokemons = []
+    this.pokemons = [];
     this.difficulty = difficulty;
     this.currentRound = 1;
     this.clickedCards = [];
     this.cardsMax =
       difficulty === "HARD" ? 16 : difficulty === "NORMAL" ? 12 : 6;
     this.gameOver = false;
-  }
-
-  click(_itemUID) {
-    if (this.clickedCards.some((i) => i === _itemUID)) {
-      this.gameOver = true;
-      return;
-    }
-    this.clickedCards = [...this.clickedCards, _itemUID];
   }
 
   incrementRound() {
@@ -30,7 +22,6 @@ export default class Game {
 
   generateRandomIndexes() {
     const indexes = new Set();
-
     while (indexes.size < this.cardsMax) {
       const { TOTAL_POKEMONS, START_ID } = CONSTANTS;
       const randomNumber = Math.floor(
@@ -62,7 +53,7 @@ export default class Game {
     this.pokemons = await Promise.all(pokemonsPromises);
   }
 
-  setShuffledPokemons() {
+  shufflePokemons() {
     if (this.pokemons.length) {
       const temp = [...this.pokemons];
       for (let i = temp.length - 1; i > 0; i--) {
@@ -70,7 +61,20 @@ export default class Game {
 
         [temp[i], temp[j]] = [temp[j], temp[i]];
       }
-      this.pokemons = temp;
+      this.pokemons = [...temp];
     }
+  }
+
+  click(_itemUID) {
+    if (this.clickedCards.some((i) => i === _itemUID)) {
+      this.gameOver = true;
+      return;
+    }
+    this.clickedCards = [...this.clickedCards, _itemUID];
+    if (this.clickedCards.length === this.cardsMax){
+      this.gameOver = true;
+      return
+    } 
+    this.shufflePokemons();
   }
 }

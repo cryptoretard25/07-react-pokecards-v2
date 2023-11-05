@@ -4,48 +4,50 @@ import "./App.css";
 
 import Header from "./components/header/Header";
 import Stats from "./components/header/Stats";
-import { useState } from "react";
 import Greeting from "./components/modal/Greeting";
 import Main from "./components/main/Main";
 import Footer from "./components/Footer";
 import GameOver from "./components/modal/GameOver";
-import { PokeContextProvider } from "./components/context/PokeContext";
 import usePokemon from "./components/hooks/usePokemon";
+import Game from "./components/scripts/game";
+import { cloneDeep } from "lodash";
 
 function App() {
-  const [
-    gameStarted,
-    setGameStarted,
-    gameOver,
-    setGameOver,
-    difficulty,
-    setDifficulty,
-    game,
-    setGame,
-  ] = usePokemon();
+  const [ gameStarted, setGameStarted, gameOver, setGameOver, difficulty, setDifficulty, game, setGame, cardsCurrent, setCardsCurrent, ] = usePokemon();
+
+  const onStartClick = async () => {
+    const game = new Game(difficulty);
+    await game.setRequestedPokemons();
+    setGameStarted(true);
+    setGame(cloneDeep(game));
+    setCardsCurrent(0);
+    setGameOver(false);
+  };
+
+  const onQuitClick = () => {
+    setGameStarted(false);
+    setGameOver(false);
+    setGame(null);
+    setCardsCurrent(0);
+  };
 
   return (
-      <div className="App">
-        <header className="App-header">
-          <Header />
-          {gameOver ? (
-            <GameOver />
-          ) : gameStarted ? (
-            <>
-              <Stats game = {game} />
-              <Main game = {game} />
-            </>
-          ) : (
-            <Greeting
-              difficulty={difficulty}
-              setDifficulty={setDifficulty}
-              setGameStarted={setGameStarted}
-              setGame={setGame}
-            />
-          )}
-          <Footer />
-        </header>
-      </div>
+    <div className="App">
+      <header className="App-header">
+        <Header onQuitClick={onQuitClick}/>
+        {gameOver ? (
+          <GameOver game={game} cardsCurrent={cardsCurrent} onStartClick={onStartClick} onQuitClick={onQuitClick} />
+        ) : gameStarted ? (
+          <>
+            <Stats game={game} cardsCurrent={cardsCurrent} />
+            <Main game={game} setGameOver={setGameOver} setCardsCurrent={setCardsCurrent} />
+          </>
+        ) : (
+          <Greeting difficulty={difficulty} setDifficulty={setDifficulty} onStartClick={onStartClick} />
+        )}
+        <Footer />
+      </header>
+    </div>
   );
 }
 

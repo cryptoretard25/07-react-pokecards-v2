@@ -1,18 +1,8 @@
 import React from "react";
-import Game from "../scripts/game";
-import { cloneDeep } from 'lodash'
 
-function Greeting({ difficulty, setDifficulty, setGameStarted, setGame }) {
+function Greeting({ difficulty, setDifficulty, onStartClick}) {
   const handleDifficulty = ({target})=>{
     setDifficulty(target.value)
-  }
-
-  const onGameStart = async (e)=>{
-    e.preventDefault();
-    const game = new Game(difficulty)
-    await game.setRequestedPokemons();
-    setGameStarted(true);
-    setGame(cloneDeep(game))
   }
 
   return (
@@ -63,7 +53,11 @@ function Greeting({ difficulty, setDifficulty, setGameStarted, setGame }) {
             </label>
           </div>
         </div>
-        <button onClick={onGameStart} type="button" className="nes-btn is-primary start-button">
+        <button
+          onClick={onStartClick}
+          type="button"
+          className="nes-btn is-primary start-button"
+        >
           START GAME
         </button>
       </div>

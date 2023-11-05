@@ -1,9 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { useEffect } from "react";
 
-function Card({ rotate, handleClick, name, imageSrc, uid }) {
+function Card({ rotate, handleClick, name, imageSrc }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [notBlocked, setNotBlocked] = useState(false);
 
