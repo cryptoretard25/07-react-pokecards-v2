@@ -36,7 +36,7 @@ export default class Game {
   async requestPokemon(id) {
     try {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${id}dgdg/`
+        `https://pokeapi.co/api/v2/pokemon/${id}/`
       );
       const { name, sprites } = response.data;
       return new Pokemon(sprites.front_default, name);
