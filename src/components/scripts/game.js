@@ -3,21 +3,13 @@ import Pokemon from "./pokemon";
 import { CONSTANTS } from "./CONSTANTS";
 
 export default class Game {
-  constructor(difficulty) {
+  constructor(cardsMax) {
     this.pokemons = [];
-    this.difficulty = difficulty;
-    this.currentRound = 1;
     this.clickedCards = [];
-    this.cardsMax =
-      difficulty === "HARD" ? 16 : difficulty === "NORMAL" ? 12 : 6;
+    this.currentRound = 0;
+    this.cardsMax = cardsMax;
     this.gameOver = false;
-  }
-
-  incrementRound() {
-    if (this.clickedCards.length === this.cardsMax) {
-      this.currentRound++;
-      return true;
-    }
+    this.gameWinned = false;
   }
 
   generateRandomIndexes() {
@@ -42,16 +34,8 @@ export default class Game {
       return new Pokemon(sprites.front_default, name);
     } catch (err) {
       console.error(err);
-      return new Pokemon('', '', err.message)
+      return new Pokemon("", "", err.message);
     }
-  }
-
-  async setRequestedPokemons() {
-    const indexes = this.generateRandomIndexes();
-    const pokemonsPromises = indexes.map(async (id) => {
-      return await this.requestPokemon(id);
-    });
-    this.pokemons = await Promise.all(pokemonsPromises);
   }
 
   shufflePokemons() {
@@ -66,16 +50,32 @@ export default class Game {
     }
   }
 
-  click(_itemUID) {
-    if (this.clickedCards.some((i) => i === _itemUID)) {
+  async setRequestedPokemons() {
+    const indexes = this.generateRandomIndexes();
+    const pokemonsPromises = indexes.map(async (id) => {
+      return await this.requestPokemon(id);
+    });
+    try {
+      this.pokemons = await Promise.all(pokemonsPromises);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  click(_uid) {
+    if (this.clickedCards.some((uid) => uid === _uid)) {
+      this.gameWinned = true;
+      return;
+    }
+
+    this.clickedCards = [...this.clickedCards, _uid];
+
+    if (this.clickedCards.length === this.cardsMax) {
       this.gameOver = true;
       return;
     }
-    this.clickedCards = [...this.clickedCards, _itemUID];
-    if (this.clickedCards.length === this.cardsMax){
-      this.gameOver = true;
-      return
-    } 
+
+    this.currentRound = this.clickedCards.length;
     this.shufflePokemons();
   }
 }
