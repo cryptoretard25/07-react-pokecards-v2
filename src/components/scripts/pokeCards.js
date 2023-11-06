@@ -43,6 +43,6 @@ export default class PokeCards {
 }
 
 
-const pokeCards = new PokeCards()
-await pokeCards.game.setRequestedPokemons();
-console.log(pokeCards)
+// const pokeCards = new PokeCards()
+// await pokeCards.game.setRequestedPokemons();
+// console.log(pokeCards)

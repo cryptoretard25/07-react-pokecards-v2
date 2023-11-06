@@ -64,14 +64,14 @@ export default class Game {
 
   click(_uid) {
     if (this.clickedCards.some((uid) => uid === _uid)) {
-      this.gameWinned = true;
+      this.gameOver = true;
       return;
     }
 
     this.clickedCards = [...this.clickedCards, _uid];
 
     if (this.clickedCards.length === this.cardsMax) {
-      this.gameOver = true;
+      this.gameWinned = true;
       return;
     }
 
