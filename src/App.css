@@ -136,9 +136,6 @@ div {
   justify-content: space-around;
 }
 
-.card:hover {
-}
-
 .face-down {
   background: url(../public/images/card-back.png) no-repeat 50%;
   background-color: var(--slate-200);

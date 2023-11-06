@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-function Stats({ game, cardsCurrent }) {
+function Stats({ game, cardsCurrent, highScore }) {
 
   return (
     <Container fluid="lg">
@@ -12,7 +12,7 @@ function Stats({ game, cardsCurrent }) {
           </p>
           <p className="high-score">
             <i className="nes-icon trophy is-medium"></i>
-            HIGH SCORE: {"0"}
+            HIGH SCORE: {highScore}
           </p>
         </div>
         <div className="game-progress">

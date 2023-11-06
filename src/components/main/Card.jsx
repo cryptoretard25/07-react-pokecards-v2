@@ -31,7 +31,7 @@ function Card({ rotate, handleClick, name, imageSrc }) {
       >
         {isFlipped && (
           <>
-            <img src={imageSrc} />
+            <img src={imageSrc} alt="Pokemon"/>
             <p>{name}</p>
           </>
         )}

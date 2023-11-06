@@ -11,9 +11,37 @@ import GameOver from "./components/modal/GameOver";
 import usePokemon from "./components/hooks/usePokemon";
 import Game from "./components/scripts/game";
 import { cloneDeep } from "lodash";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function App() {
-  const [ gameStarted, setGameStarted, gameOver, setGameOver, difficulty, setDifficulty, game, setGame, cardsCurrent, setCardsCurrent, ] = usePokemon();
+  const [
+    gameStarted,
+    setGameStarted,
+    gameOver,
+    setGameOver,
+    difficulty,
+    setDifficulty,
+    game,
+    setGame,
+    cardsCurrent,
+    setCardsCurrent,
+  ] = usePokemon();
+
+  const [highScore, setHighScore] = useState(() => {
+    const storedHighScore = localStorage.getItem("ReactPokemonsHighScore");
+    return storedHighScore ? parseInt(storedHighScore, 10) : cardsCurrent;
+  });
+
+  useEffect(() => {
+    setHighScore((prev) => {
+      if (prev < cardsCurrent) return cardsCurrent;
+      else return prev;
+    });
+    return () => {
+      localStorage.setItem("ReactPokemonsHighScore", highScore);
+    };
+  }, [cardsCurrent, highScore]);
 
   const onStartClick = async () => {
     const game = new Game(difficulty);
@@ -34,16 +62,33 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Header onQuitClick={onQuitClick}/>
+        <Header onQuitClick={onQuitClick} />
         {gameOver ? (
-          <GameOver game={game} cardsCurrent={cardsCurrent} onStartClick={onStartClick} onQuitClick={onQuitClick} />
+          <GameOver
+            game={game}
+            cardsCurrent={cardsCurrent}
+            onStartClick={onStartClick}
+            onQuitClick={onQuitClick}
+          />
         ) : gameStarted ? (
           <>
-            <Stats game={game} cardsCurrent={cardsCurrent} />
-            <Main game={game} setGameOver={setGameOver} setCardsCurrent={setCardsCurrent} />
+            <Stats
+              game={game}
+              cardsCurrent={cardsCurrent}
+              highScore={highScore}
+            />
+            <Main
+              game={game}
+              setGameOver={setGameOver}
+              setCardsCurrent={setCardsCurrent}
+            />
           </>
         ) : (
-          <Greeting difficulty={difficulty} setDifficulty={setDifficulty} onStartClick={onStartClick} />
+          <Greeting
+            difficulty={difficulty}
+            setDifficulty={setDifficulty}
+            onStartClick={onStartClick}
+          />
         )}
         <Footer />
       </header>
