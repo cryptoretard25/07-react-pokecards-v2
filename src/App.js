@@ -10,9 +10,10 @@ import Footer from "./components/Footer";
 import GameOver from "./components/modal/GameOver";
 import usePokemon from "./components/hooks/usePokemon";
 import Game from "./components/scripts/game";
-import { cloneDeep } from "lodash";
+import Error from "./components/modal/Error";
 import { useState } from "react";
 import { useEffect } from "react";
+import { cloneDeep } from 'lodash'
 
 function App() {
   const [
@@ -32,6 +33,7 @@ function App() {
     const storedHighScore = localStorage.getItem("ReactPokemonsHighScore");
     return storedHighScore ? parseInt(storedHighScore, 10) : cardsCurrent;
   });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setHighScore((prev) => {
@@ -45,7 +47,11 @@ function App() {
 
   const onStartClick = async () => {
     const game = new Game(difficulty);
-    await game.setRequestedPokemons();
+   await game.setRequestedPokemons()
+   if(game.pokemons.some(pokemon=> pokemon.error)){
+    setError(`Failed to fetch data`)
+    return
+   }
     setGameStarted(true);
     setGame(cloneDeep(game));
     setCardsCurrent(0);
@@ -57,13 +63,16 @@ function App() {
     setGameOver(false);
     setGame(null);
     setCardsCurrent(0);
+    setError('')
   };
 
   return (
     <div className="App">
       <header className="App-header">
         <Header onQuitClick={onQuitClick} />
-        {gameOver ? (
+        {error ? (
+          <Error error={error} onQuitClick={onQuitClick}/>
+        ) : gameOver ? (
           <GameOver
             game={game}
             cardsCurrent={cardsCurrent}
