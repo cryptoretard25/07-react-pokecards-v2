@@ -9,6 +9,7 @@ export default class Game {
     this.currentRound = 0;
     this.cardsMax = cardsMax;
     this.gameOver = false;
+    this.gameLosed = false;
     this.gameWinned = false;
   }
 
@@ -64,7 +65,9 @@ export default class Game {
 
   click(_uid) {
     if (this.clickedCards.some((uid) => uid === _uid)) {
+      this.gameLosed = true;
       this.gameOver = true;
+      this.currentRound = this.clickedCards.length
       return;
     }
 
@@ -72,6 +75,8 @@ export default class Game {
 
     if (this.clickedCards.length === this.cardsMax) {
       this.gameWinned = true;
+      this.gameOver = true;
+      this.currentRound = this.clickedCards.length;
       return;
     }
 
