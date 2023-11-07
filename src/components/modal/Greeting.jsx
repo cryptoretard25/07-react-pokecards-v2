@@ -31,7 +31,7 @@ function Greeting() {
           <button
             onClick={() =>
               window.open(
-                "https://github.com/cryptoretard25/19-project-memory-card/tree/gameclass",
+                "https://github.com/cryptoretard25/07-react-pokecards-v2",
                 "_blank"
               )
             }
