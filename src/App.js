@@ -2,106 +2,113 @@ import "nes.css/css/nes.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+import { cloneDeep } from "lodash";
+import PokeCards from "./components/classes/pokeCards";
+import LoadingScreen from "./components/modal/LoadingScreen";
+import GameFinished from "./components/modal/GameFinished";
+
+import React, { useEffect, useState, createContext } from "react";
 import Header from "./components/header/Header";
 import Stats from "./components/header/Stats";
 import Greeting from "./components/modal/Greeting";
 import Main from "./components/main/Main";
 import Footer from "./components/Footer";
 import GameOver from "./components/modal/GameOver";
-import usePokemon from "./components/hooks/usePokemon";
-import Game from "./components/scripts/game";
 import Error from "./components/modal/Error";
-import { useState } from "react";
-import { useEffect } from "react";
-import { cloneDeep } from 'lodash'
+
+export const PokeContext = createContext();
 
 function App() {
-  const [
-    gameStarted,
-    setGameStarted,
-    gameOver,
-    setGameOver,
-    difficulty,
-    setDifficulty,
-    game,
-    setGame,
-    cardsCurrent,
-    setCardsCurrent,
-  ] = usePokemon();
-
-  const [highScore, setHighScore] = useState(() => {
-    const storedHighScore = localStorage.getItem("ReactPokemonsHighScore");
-    return storedHighScore ? parseInt(storedHighScore, 10) : cardsCurrent;
-  });
+  const [pokeCards, setPokeCards] = useState(new PokeCards());
+  const [game, setGame] = useState(cloneDeep(pokeCards.game));
+  const [showGreeting, setShowGreeting] = useState(false);
+  const [fetchData, setFetchData] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setHighScore((prev) => {
-      if (prev < cardsCurrent) return cardsCurrent;
-      else return prev;
-    });
-    return () => {
-      localStorage.setItem("ReactPokemonsHighScore", highScore);
-    };
-  }, [cardsCurrent, highScore]);
+    if (fetchData) {
+      (async () => {
+        setLoadingScreen(true);
+        await game.setRequestedPokemons();
+        setLoadingScreen(false);
+        if (game.pokemons.some((pokemon) => pokemon.error)) {
+          setError("Data fetching error");
+          return;
+        }
+        setGame(cloneDeep(game));
+      })();
+    }
 
-  const onStartClick = async () => {
-    const game = new Game(difficulty);
-   await game.setRequestedPokemons()
-   if(game.pokemons.some(pokemon=> pokemon.error)){
-    setError(`Failed to fetch data`)
-    return
-   }
-    setGameStarted(true);
-    setGame(cloneDeep(game));
-    setCardsCurrent(0);
-    setGameOver(false);
+    return () => {
+      setFetchData(false);
+    };
+  }, [fetchData]);
+
+  const onRestartClick = () => {
+    pokeCards.restartGame();
+    setGame(cloneDeep(pokeCards.game));
+    setPokeCards(cloneDeep(pokeCards));
+    setFetchData(true);
+  };
+
+  const onNextRoundClick = () => {
+    pokeCards.continueGame();
+    setGame(cloneDeep(pokeCards.game));
+    setPokeCards(cloneDeep(pokeCards));
+    setFetchData(true);
   };
 
   const onQuitClick = () => {
-    setGameStarted(false);
-    setGameOver(false);
-    setGame(null);
-    setCardsCurrent(0);
-    setError('')
+    setShowGreeting(false);
+    pokeCards.restartGame();
+    setPokeCards(cloneDeep(pokeCards));
+    setGame(cloneDeep(pokeCards.game));
+    setError("");
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Header onQuitClick={onQuitClick} />
-        {error ? (
-          <Error error={error} onQuitClick={onQuitClick}/>
-        ) : gameOver ? (
-          <GameOver
-            game={game}
-            cardsCurrent={cardsCurrent}
-            onStartClick={onStartClick}
-            onQuitClick={onQuitClick}
-          />
-        ) : gameStarted ? (
-          <>
-            <Stats
-              game={game}
-              cardsCurrent={cardsCurrent}
-              highScore={highScore}
+    <PokeContext.Provider
+      value={{
+        pokeCards,
+        setPokeCards,
+        game,
+        setGame,
+        setShowGreeting,
+        setFetchData,
+        setLoadingScreen,
+      }}
+    >
+      <div className="App">
+        <header className="App-header">
+          <Header onQuitClick={onQuitClick} />
+          {loadingScreen ? (
+            <LoadingScreen />
+          ) : pokeCards.gameCompleted ? (
+            <GameFinished
+              onRestartClick={onRestartClick}
+              onQuitClick={onQuitClick}
             />
-            <Main
-              game={game}
-              setGameOver={setGameOver}
-              setCardsCurrent={setCardsCurrent}
+          ) : game.gameOver ? (
+            <GameOver
+              onQuitClick={onQuitClick}
+              onRestartClick={onRestartClick}
+              onNextRoundClick={onNextRoundClick}
             />
-          </>
-        ) : (
-          <Greeting
-            difficulty={difficulty}
-            setDifficulty={setDifficulty}
-            onStartClick={onStartClick}
-          />
-        )}
-        <Footer />
-      </header>
-    </div>
+          ) : !showGreeting ? (
+            <Greeting />
+          ) : error ? (
+            <Error />
+          ) : (
+            <>
+              <Stats />
+              <Main />
+            </>
+          )}
+          <Footer />
+        </header>
+      </div>
+    </PokeContext.Provider>
   );
 }
 

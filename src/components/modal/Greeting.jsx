@@ -1,65 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
+import { PokeContext } from "../../App";
 
-function Greeting({ difficulty, setDifficulty, onStartClick}) {
-  const handleDifficulty = ({target})=>{
-    setDifficulty(target.value)
-  }
+function Greeting() {
+  const { setShowGreeting, setFetchData } = useContext(PokeContext);
+
+  const onStartClick = () => {
+    setShowGreeting(true);
+    setFetchData(true);
+  };
 
   return (
     <div className="greeting-modal">
       <div className="nes-container is-rounded greeting-wrapper">
         <i className="nes-kirby" style={{ alignSelf: "center" }} />
-        <h2>Welcome to Pokemon Cards!</h2>
-        <div className="nes-container with-title is-centered">
-          <p
-            className="title"
-            style={{ fontSize: "1.4rem", margin: "-2.5rem auto 1rem" }}
+        <h2 style={{ display: "block" }}>
+          Welcome to <span style={{ color: "red" }}>Poké</span>Cards V2
+        </h2>
+        <p style={{ textAlign: "center" }}>
+          Your task is to reveal all unique cards while avoiding repetitions.
+          One miss, and you lose.
+        </p>
+        <div className="buttons-wrapper">
+          <button
+            onClick={onStartClick}
+            type="button"
+            className="nes-btn is-primary start-button"
           >
-            Choose difficulty
-          </p>
-          <div>
-            <label>
-              <input
-                type="radio"
-                className="nes-radio"
-                name="answer"
-                value={"EASY"}
-                checked={difficulty === "EASY"}
-                onChange={handleDifficulty}
-              />
-              <span>Easy</span>
-            </label>{" "}
-            <label>
-              <input
-                type="radio"
-                className="nes-radio"
-                name="answer"
-                value={"NORMAL"}
-                checked={difficulty === "NORMAL"}
-                onChange={handleDifficulty}
-              />
-              <span>Normal</span>
-            </label>{" "}
-            <label>
-              <input
-                type="radio"
-                className="nes-radio"
-                name="answer"
-                value={"HARD"}
-                checked={difficulty === "HARD"}
-                onChange={handleDifficulty}
-              />
-              <span>Hard</span>
-            </label>
-          </div>
+            START GAME
+          </button>
+          <button
+            onClick={() =>
+              window.open(
+                "https://github.com/cryptoretard25/19-project-memory-card/tree/gameclass",
+                "_blank"
+              )
+            }
+            type="button"
+            className="nes-btn is-success start-button"
+          >
+            VISIT REPO
+          </button>
         </div>
-        <button
-          onClick={onStartClick}
-          type="button"
-          className="nes-btn is-primary start-button"
-        >
-          START GAME
-        </button>
       </div>
     </div>
   );

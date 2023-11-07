@@ -1,6 +1,7 @@
 import React from "react";
 
 function Header({onQuitClick}) {
+  
   return (
     <div className="header-wrapper">
       <h2 onClick={onQuitClick}>
@@ -9,8 +10,8 @@ function Header({onQuitClick}) {
           alt="pokeball"
         />
         <div>
-          React <span style={{ color: "red" }}>Poké</span>
-          <span>mon</span> Cards
+          <span style={{ color: "red" }}>Poké</span>
+          <span>Cards</span> V2
         </div>
       </h2>
     </div>

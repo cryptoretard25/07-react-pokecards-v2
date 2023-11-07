@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext }  from "react";
+import { PokeContext } from "../../App";
 
-function Error({ error, onQuitClick }) {
+function Error({ onQuitClick }) {
+  const {error} = useContext(PokeContext)
+
   return (
     <div className="greeting-modal">
       <div

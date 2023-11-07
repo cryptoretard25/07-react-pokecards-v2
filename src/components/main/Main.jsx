@@ -1,21 +1,27 @@
-import React, { useState } from "react";
+import { cloneDeep } from "lodash";
 import { Container } from "react-bootstrap";
-import Card from "./Card";
 
-function Main({ game, setGameOver, setCardsCurrent }) {
-  const { pokemons } = game;
+import React, { useState, useContext } from "react";
+import Card from "./Card";
+import { PokeContext } from "../../App";
+
+
+function Main() {
+  const { game, setGame, pokeCards } = useContext(PokeContext);
   const [rotate, setRotate] = useState(true);
+
+  const {pokemons} = game;
 
   const handleClick = (uid) => {
     setRotate(false);
     setTimeout(() => {
       setRotate(true);
-      game.click(uid);
-      setGameOver(game.gameOver);
-      setCardsCurrent(game.clickedCards.length)
-      console.log(game)
+      const clickResult = game.click(uid);
+      pokeCards.incrementRecord(clickResult)
+      setGame(cloneDeep(game));
     }, 1500);
   };
+
 
   return (
     <Container fluid="lg" className="main-container">

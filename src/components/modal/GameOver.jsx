@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
+import { PokeContext } from "../../App";
 
-function GameOver({
-  game,
-  cardsCurrent,
-  onStartClick,
-  onQuitClick,
-}) {
+function GameOver({ onQuitClick, onRestartClick, onNextRoundClick }) {
+  const { game, pokeCards } =
+    useContext(PokeContext);
+
+  const { gameWinned, gameLosed } = game;
 
   return (
     <div className="greeting-modal">
       <div className="nes-container is-rounded greeting-wrapper">
         <i className="nes-ash" style={{ alignSelf: "center" }}></i>
-        <h2>
-          Game over!
-          <br />
-          {game.cardsMax === cardsCurrent
-            ? "Congratulations you win!"
-            : "Sorry, but you lose."}
-        </h2>
+        {gameLosed && (
+          <>
+            <h2>Game Over!</h2>
+            <h2>Sorry, but you lose</h2>
+          </>
+        )}
+        {gameWinned && (
+          <>
+            <h2>Level completed!</h2>
+            <h2>Congratulations you win!</h2>
+          </>
+        )}
         <div className="nes-container with-title is-centered">
-          <p>Your final score is: {cardsCurrent}</p>
+          <p>Your final score is: {pokeCards.progress}</p>
         </div>
+
         <div style={{ alignSelf: "center" }}>
           <button
             type="button"
             className="nes-btn is-success start-button"
             style={{ width: "17rem" }}
-            onClick={onStartClick}
+            onClick={gameLosed ? onRestartClick : onNextRoundClick}
           >
-            Play Again
+            {gameLosed && "Play Again"}
+            {gameWinned && "Next Round"}
           </button>{" "}
           <button
             type="button"
