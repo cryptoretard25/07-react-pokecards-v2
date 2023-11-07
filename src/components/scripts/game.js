@@ -68,7 +68,7 @@ export default class Game {
       this.gameLosed = true;
       this.gameOver = true;
       this.currentRound = this.clickedCards.length
-      return;
+      return false;
     }
 
     this.clickedCards = [...this.clickedCards, _uid];
@@ -77,10 +77,11 @@ export default class Game {
       this.gameWinned = true;
       this.gameOver = true;
       this.currentRound = this.clickedCards.length;
-      return;
+      return true;
     }
 
     this.currentRound = this.clickedCards.length;
     this.shufflePokemons();
+    return true;
   }
 }
