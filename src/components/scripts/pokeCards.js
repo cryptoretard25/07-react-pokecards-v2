@@ -29,20 +29,16 @@ export default class PokeCards {
     return this.game.gameWinned;
   }
 
-  restartGame(Game) {
+  restartGame() {
     this.level = 1;
     this.cardsTotal = 6;
     this.game = new Game(this.cardsTotal);
+    return this.game
   }
 
-  continueGame(Game) {
+  continueGame() {
     this.level = this.level + 1;
     this.cardsTotal = this.cardsTotal + 2;
     this.game = new Game(this.cardsTotal);
   }
 }
-
-
-// const pokeCards = new PokeCards()
-// await pokeCards.game.setRequestedPokemons();
-// console.log(pokeCards)
