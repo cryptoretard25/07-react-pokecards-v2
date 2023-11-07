@@ -21,14 +21,6 @@ export default class PokeCards {
     }
   }
 
-  checkIsGameLost() {
-    return this.game.gameOver;
-  }
-
-  checkIsGameWinned() {
-    return this.game.gameWinned;
-  }
-
   restartGame() {
     this.level = 1;
     this.cardsTotal = 6;
@@ -40,5 +32,6 @@ export default class PokeCards {
     this.level = this.level + 1;
     this.cardsTotal = this.cardsTotal + 2;
     this.game = new Game(this.cardsTotal);
+    return this.game
   }
 }
