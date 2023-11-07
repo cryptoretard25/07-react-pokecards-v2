@@ -1,6 +1,6 @@
 {
-  "name": "19-project-memory-card",
-  "version": "0.1.0",
+  "name": "07-react-pokecards-v2",
+  "version": "2.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
+    "react-howler": "^5.2.0",
     "react-scripts": "5.0.1",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"

@@ -1,8 +1,13 @@
-import React, { useContext }  from "react";
+import React, { useContext, useEffect } from "react";
 import { PokeContext } from "../../App";
+import * as sounds from '../script/sounds'
 
-function GameFinished({onRestartClick, onQuitClick}) {
-  const {pokeCards} = useContext(PokeContext)
+function GameFinished({ onRestartClick, onQuitClick }) {
+  const { pokeCards } = useContext(PokeContext);
+
+  useEffect(() => {
+    sounds.gameFinished.play();
+  }, []);
 
   return (
     <div className="greeting-modal" style={{ zIndex: "10000" }}>

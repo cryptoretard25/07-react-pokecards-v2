@@ -15,6 +15,7 @@ import Main from "./components/main/Main";
 import Footer from "./components/Footer";
 import GameOver from "./components/modal/GameOver";
 import Error from "./components/modal/Error";
+import * as sounds from "./components/script/sounds";
 
 export const PokeContext = createContext();
 
@@ -46,6 +47,7 @@ function App() {
   }, [fetchData]);
 
   const onRestartClick = () => {
+    sounds.mouseClick.play();
     pokeCards.restartGame();
     setGame(cloneDeep(pokeCards.game));
     setPokeCards(cloneDeep(pokeCards));
@@ -53,6 +55,7 @@ function App() {
   };
 
   const onNextRoundClick = () => {
+    sounds.mouseClick.play();
     pokeCards.continueGame();
     setGame(cloneDeep(pokeCards.game));
     setPokeCards(cloneDeep(pokeCards));
@@ -60,6 +63,7 @@ function App() {
   };
 
   const onQuitClick = () => {
+    sounds.mouseClick.play();
     setShowGreeting(false);
     pokeCards.restartGame();
     setPokeCards(cloneDeep(pokeCards));

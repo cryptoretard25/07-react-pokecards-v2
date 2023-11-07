@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import React, { useState, useContext } from "react";
 import Card from "./Card";
 import { PokeContext } from "../../App";
+import * as sounds from "../script/sounds";
 
 
 function Main() {
@@ -13,13 +14,14 @@ function Main() {
   const {pokemons} = game;
 
   const handleClick = (uid) => {
+    sounds.flip.play();
     setRotate(false);
     setTimeout(() => {
       setRotate(true);
       const clickResult = game.click(uid);
       pokeCards.incrementRecord(clickResult)
       setGame(cloneDeep(game));
-    }, 1500);
+    }, 1000);
   };
 
 

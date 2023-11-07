@@ -1,6 +1,6 @@
 import axios from "axios";
 import Pokemon from "./pokemon";
-import { CONSTANTS } from "../constants/CONSTANTS";
+import { CONSTANTS } from "../script/CONSTANTS";
 
 export default class Game {
   constructor(cardsMax) {

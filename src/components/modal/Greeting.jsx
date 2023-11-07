@@ -1,13 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { PokeContext } from "../../App";
+import * as sounds from '../script/sounds'
+
 
 function Greeting() {
   const { setShowGreeting, setFetchData } = useContext(PokeContext);
 
   const onStartClick = () => {
+    sounds.mouseClick.play();
     setShowGreeting(true);
     setFetchData(true);
   };
+
+  const onRepoClick = () => {
+    sounds.mouseClick.play();
+    window.open( "https://github.com/cryptoretard25/07-react-pokecards-v2", "_blank" );
+  };
+  
 
   return (
     <div className="greeting-modal">
@@ -29,12 +38,7 @@ function Greeting() {
             START GAME
           </button>
           <button
-            onClick={() =>
-              window.open(
-                "https://github.com/cryptoretard25/07-react-pokecards-v2",
-                "_blank"
-              )
-            }
+            onClick={onRepoClick}
             type="button"
             className="nes-btn is-success start-button"
           >

@@ -1,11 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { PokeContext } from "../../App";
+import * as sounds from "../script/sounds";
 
 function GameOver({ onQuitClick, onRestartClick, onNextRoundClick }) {
-  const { game, pokeCards } =
-    useContext(PokeContext);
+  const { game, pokeCards } = useContext(PokeContext);
 
   const { gameWinned, gameLosed } = game;
+
+  useEffect(() => {
+    if (gameWinned) {
+      sounds.success.play();
+    }
+    if (gameLosed) {
+      sounds.fail.play();
+    }
+  }, []);
 
   return (
     <div className="greeting-modal">
