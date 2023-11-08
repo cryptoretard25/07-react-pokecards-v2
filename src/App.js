@@ -48,6 +48,7 @@ function App() {
   }, [fetchData]);
 
   const onRestartClick = () => {
+    setError('');
     sounds.mouseClick.play();
     pokeCards.restartGame();
     setGame(cloneDeep(pokeCards.game));
