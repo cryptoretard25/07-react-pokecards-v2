@@ -37,6 +37,7 @@ function App() {
           setError("Data fetching error");
           return;
         }
+        console.log(game.pokemons)
         setGame(cloneDeep(game));
       })();
     }
@@ -81,6 +82,8 @@ function App() {
         setShowGreeting,
         setFetchData,
         setLoadingScreen,
+        error,
+        setError,
       }}
     >
       <div className="App">
@@ -102,7 +105,7 @@ function App() {
           ) : !showGreeting ? (
             <Greeting />
           ) : error ? (
-            <Error />
+            <Error onQuitClick={onQuitClick} onRestartClick={onRestartClick}/>
           ) : (
             <>
               <Stats />

@@ -1,9 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { PokeContext } from "../../App";
 
 function Card({ rotate, handleClick, name, imageSrc }) {
+  const {setError} = useContext(PokeContext)
+
   const [isFlipped, setIsFlipped] = useState(false);
   const [notBlocked, setNotBlocked] = useState(false);
+
+  const onImgError = ()=>{
+    setError('Images Not Found')
+  }
 
   const variants = {
     faceUp: { rotateY: 0 },
@@ -31,7 +38,7 @@ function Card({ rotate, handleClick, name, imageSrc }) {
       >
         {isFlipped && (
           <>
-            <img src={imageSrc} alt="Pokemon"/>
+            <img src={imageSrc} alt="Pokemon" onError={onImgError} />
             <p>{name}</p>
           </>
         )}

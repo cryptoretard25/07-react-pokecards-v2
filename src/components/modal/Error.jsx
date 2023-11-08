@@ -1,14 +1,13 @@
 import React, { useContext }  from "react";
 import { PokeContext } from "../../App";
 
-function Error({ onQuitClick }) {
+function Error({ onQuitClick, onRestartClick }) {
   const {error} = useContext(PokeContext)
 
   return (
     <div className="greeting-modal">
       <div
         style={{
-          color: "red",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -20,15 +19,24 @@ function Error({ onQuitClick }) {
       >
         <h3>Network error! </h3>
         <h3>{error}</h3>
-
-        <button
-          style={{ padding: "0.5rem 4rem" }}
-          type="button"
-          className="nes-btn is-warning"
-          onClick={onQuitClick}
-        >
-          Quit
-        </button>
+        <div style={{ alignSelf: "center" }}>
+          <button
+            style={{ padding: "0.5rem 3rem", width: "18rem" }}
+            type="button"
+            className="nes-btn is-warning"
+            onClick={onRestartClick}
+          >
+            Restart
+          </button>{" "}
+          <button
+            style={{ padding: "0.5rem 3rem", width: "18rem" }}
+            type="button"
+            className="nes-btn is-error"
+            onClick={onQuitClick}
+          >
+            Quit
+          </button>{" "}
+        </div>
       </div>
     </div>
   );
