@@ -9,7 +9,7 @@ function Card({ rotate, handleClick, name, imageSrc }) {
   const [notBlocked, setNotBlocked] = useState(false);
 
   const onImgError = ()=>{
-    setError('Images Not Found')
+    setError(["Images Not Found", "Cant load images from server", "Code: 404"]);
   }
 
   const variants = {

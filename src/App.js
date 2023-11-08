@@ -34,7 +34,7 @@ function App() {
         await game.setRequestedPokemons();
         setLoadingScreen(false);
         if (game.pokemons.some((pokemon) => pokemon.error)) {
-          setError("Data fetching error");
+          setError(["Data Fetching Error", "Bad Request", 'Code: 404']);
           return;
         }
         console.log(game.pokemons)

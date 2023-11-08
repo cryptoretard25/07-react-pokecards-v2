@@ -18,7 +18,9 @@ function Error({ onQuitClick, onRestartClick }) {
         className="nes-container is-rounded greeting-wrapper"
       >
         <h3>Network error! </h3>
-        <h3>{error}</h3>
+          {error.map((err) => (
+            <h3 style={{ textAlign: "center" }}>{err}</h3>
+          ))}
         <div style={{ alignSelf: "center" }}>
           <button
             style={{ padding: "0.5rem 3rem", width: "18rem" }}
