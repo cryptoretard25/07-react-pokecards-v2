@@ -48,12 +48,12 @@ function App() {
   }, [fetchData]);
 
   const onRestartClick = () => {
-    setError('');
     sounds.mouseClick.play();
     pokeCards.restartGame();
     setGame(cloneDeep(pokeCards.game));
     setPokeCards(cloneDeep(pokeCards));
     setFetchData(true);
+    setError("");
   };
 
   const onNextRoundClick = () => {
