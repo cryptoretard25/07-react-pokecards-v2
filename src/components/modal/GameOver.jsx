@@ -36,7 +36,7 @@ function GameOver({ onQuitClick, onRestartClick, onNextRoundClick }) {
           <p>Your final score is: {pokeCards.progress}</p>
         </div>
 
-        <div style={{ alignSelf: "center" }}>
+        <div style={{ alignSelf: "center", textAlign: 'center'}}>
           <button
             type="button"
             className="nes-btn is-success start-button"
